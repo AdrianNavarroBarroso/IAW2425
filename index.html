@@ -1,11 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Perfil Personal</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: #000;
+                color: #fff;
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 90vh;
+                flex-direction: column;
+            }
     
-</body>
+            .foto_perfil {
+                border-radius: 50%;
+                width: 200px;
+                height: 200px;
+                object-fit: cover;
+                border: 3px solid #fff;
+            }
+    
+            .descripcion {
+                text-align: center;
+                margin-bottom: 20px;
+                font-size: 18px;
+                width: 80%;
+                margin: 50px;
+            }
+    
+            .redes_sociales a {
+                text-decoration: none;
+                color: white;
+                background-color: #333;
+                padding: 10px 100px;
+                margin: 5px;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+    
+            .redes_sociales a:hover {
+                background-color: #555;
+            }
+        </style>
+    </head>
+    <body>
+    
+        <img src="./IMÁGENES/GatoMirada.gif" alt="Foto de Perfil" class="foto_perfil">
+    
+        <p class="descripcion">
+            Hola, soy Adrián Navarro, un alumno más de IAW. <br> 
+            Dejo por aquí un enlace a mi GitHub, donde iré subiendo <br>
+            avances en las tareas del curso.
+        </p>
+    
+        <div class="redes_sociales">
+            <a href="https://github.com/AdrianNavarroBarroso/IAW2425" target="_blank">GitHub</a>
+        </div>
+    
+    </body>
 </html>
