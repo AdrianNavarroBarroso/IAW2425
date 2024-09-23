@@ -9,13 +9,16 @@
             body {
                 margin: 0;
                 padding: 0;
-                background-color: #000;
+                background-image: url('./IMÁGENES/fondonegro.jpg');
+                background-size: cover; 
+                background-position: center;
+                background-repeat: no-repeat;
                 color: #fff;
                 font-family: Arial, sans-serif;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 90vh;
+                height: 100vh;
                 flex-direction: column;
             }
     
@@ -38,11 +41,18 @@
             .redes_sociales a {
                 text-decoration: none;
                 color: white;
-                background-color: #333;
-                padding: 10px 100px;
+                background-color: #9c9c9c;
+                padding: 10px 50px;
                 margin: 5px;
                 border-radius: 5px;
                 font-size: 16px;
+                display: flex;
+                flex-direction: row;
+            }
+
+            .icono_github {
+                width: 40px;
+                height: auto;
             }
     
             .redes_sociales a:hover {
@@ -64,7 +74,9 @@
         </p>
     
         <div class="redes_sociales">
-            <a href="https://github.com/AdrianNavarroBarroso/IAW2425" target="_blank">GitHub</a>
+            <a href="https://github.com/AdrianNavarroBarroso/IAW2425" target="_blank">
+                <img src="./IMÁGENES/signo-de-github.png" alt="GitHub" class="icono_github">
+            </a>
         </div>
     
     </body>
