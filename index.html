@@ -1,11 +1,65 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Perfil Personal</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: #000;
+                color: #fff;
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                flex-direction: column;
+            }
     
-</body>
+            .profile-pic {
+                border-radius: 50%;
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+                border: 3px solid #fff;
+                margin-bottom: 20px;
+            }
+    
+            .description {
+                text-align: center;
+                margin-bottom: 20px;
+                font-size: 18px;
+                width: 80%;
+            }
+    
+            .social-buttons a {
+                text-decoration: none;
+                color: white;
+                background-color: #333;
+                padding: 10px 20px;
+                margin: 5px;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+    
+            .social-buttons a:hover {
+                background-color: #555;
+            }
+        </style>
+    </head>
+    <body>
+    
+        <img src="avatar.jpg" alt="Foto de Perfil" class="profile-pic">
+    
+        <p class="description">Hola, soy [Tu Nombre], un apasionado de la tecnología y las redes sociales. Sígueme en mis redes para estar al tanto de mis últimas actualizaciones y proyectos.</p>
+    
+        <div class="social-buttons">
+            <a href="https://twitter.com/tuusuario" target="_blank">Twitter</a>
+            <a href="https://instagram.com/tuusuario" target="_blank">Instagram</a>
+            <a href="https://linkedin.com/in/tuusuario" target="_blank">LinkedIn</a>
+        </div>
+    
+    </body>
 </html>
