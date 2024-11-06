@@ -18,5 +18,11 @@ Estos son algunos enlaces de interés:
 1. [Página oficial de Git](https://git-scm.com/)
 2. [Página oficial de Docker](https://www.docker.com/)
 3. [Página oficial de w3schools](https://www.w3schools.com/)
+<<<<<<< HEAD
 
 ---
+=======
+4. [Curso de Docker](https://iesgn.github.io/curso_docker_2021/)
+
+---
+>>>>>>> 5825370c95cc24c2332bf0b8fe281a618e39a385
