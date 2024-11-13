@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EJERCICIO 5 DE REPASO</title>
+    <script src="jquery-3.7.1.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh;     
+            margin: 0;
+        }
+
+        .contenedor {
+            display: flex;
+            gap: 20px;
+        }
+
+        .circulo-contenedor {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cuadrado {
+            width: 200px;
+            height: 200px;
+        }
+
+        #rojo {
+            background-color: red;
+            display: none;
+        }
+
+        #azul {
+            background-color: blue;
+            display: none;
+        }
+
+        #verde {
+            background-color: green;
+            display: none;
+        }
+
+        button {
+            padding: 15px 25px;
+            font-size: 16px; 
+            cursor: pointer;
+        }
+
+        .botonera{
+            display: flex;
+            gap: 20px;
+            margin: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>USO DE FADEIN(), FADEOUT() y FADETOGGLE()</h1>
+    
+    <div class="contenedor">
+        <div class="cuadrado_contenedor">
+            <div class="cuadrado" id="rojo"></div>
+        </div>
+
+        <div class="cuadrado_contenedor">
+            <div class="cuadrado" id="azul"></div>
+        </div>
+
+        <div class="cuadrado_contenedor">
+            <div class="cuadrado" id="verde"></div>
+        </div>
+    </div> 
+
+    <div class="botonera">
+        <button class="aparecer">Aparecer</button>
+        <button class="desaparecer">Desaparecer</button>
+        <button class="alternar">Alternar</button>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $(".aparecer").click(function(){
+                $("#rojo").fadeIn("slow");
+                $("#azul").fadeIn("slow");
+                $("#verde").fadeIn("slow");
+            })
+        });
+    </script>
+</body>
+</html>

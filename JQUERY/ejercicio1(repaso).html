@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EJERCICIO 1 DE REPASO</title>
+    <script src="jquery-3.7.1.js"></script>
+</head>
+<body>
+
+    <h1>
+        PRUEBA DE OCULTAR Y MOSTRAR
+    </h1>
+
+    <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem vero provident voluptatem odio quidem corrupti sunt delectus! Facilis illo dolorum blanditiis placeat dicta recusandae maiores fugit culpa, libero, sit accusamus.
+    </p>
+
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Et accusantium, aspernatur, reiciendis hic modi unde officia nesciunt qui voluptate animi fugiat porro veniam dolor, aperiam odio libero dolorem at quasi!
+    </p>
+
+    <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis architecto in voluptate voluptas cum illo, accusamus repudiandae autem at minima modi. Temporibus molestiae modi, aut qui quod est voluptas accusantium.
+    </p>
+
+    <button id="ocultar">Ocultar</button>
+    <button id="mostrar">Mostrar</button>
+
+    <script>
+        $(document).ready(function () {
+            $("#ocultar").click(function(){
+                $("p").hide();
+                $("h1").hide();
+            })
+            $("#mostrar").click(function(){
+                $("p").show();
+                $("h1").show();
+            })
+        });
+    </script>
+</body>
+</html>

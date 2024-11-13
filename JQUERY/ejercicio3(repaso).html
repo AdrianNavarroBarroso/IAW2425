@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EJERCICIO 3 DE REPASO</title>
+    <script src="jquery-3.7.1.js"></script>
+</head>
+<body>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, quod sit voluptatum, aliquam neque delectus libero iste dolore molestiae commodi eaque vero non dolorem optio perspiciatis ad consectetur nulla ab.
+    </p>
+
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae quod ipsam, dignissimos odio officiis hic eos consequuntur, dolor suscipit iusto, consectetur deserunt repellat sed quisquam ab sunt ratione? Fugiat, pariatur?
+    </p>
+
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem laborum consequuntur repudiandae reiciendis eos sequi quod, doloribus nulla nihil, alias aperiam deleniti enim! Consequuntur quam cumque debitis molestias vel libero!
+    </p>
+
+    <button id="mas_grande">Más Grande</button>
+    <button id="mas_pequeno">Más Pequeño</button>
+
+    <script>
+        $(document).ready(function() {
+            $("#mas_grande").click(function(){
+                $("p").css("font-size", "+=10px");
+            })
+            $("#mas_pequeno").click(function(){
+                $("p").css("font-size", "-=10px");
+            })
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EJERCICIO 2 DE REPASO</title>
+    <script src="jquery-3.7.1.js"></script>
+</head>
+<body>
+
+    <h1>
+        PRUEBA DE OCULTAR Y MOSTRAR PARES
+    </h1>
+
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis, amet. Voluptatem placeat aspernatur rem deleniti tempore odit quibusdam totam molestias, facilis at voluptatibus quidem ratione, iste temporibus illo iusto nesciunt!
+    </p>
+
+    <p class="par">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint repellendus hic explicabo quibusdam voluptates magnam nemo, velit accusamus ad ex dolore eaque veritatis voluptatibus perspiciatis consequatur corporis. Ad, quisquam doloribus.
+    </p>
+
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste dicta laudantium voluptas distinctio repellendus consequuntur ex veniam? Laboriosam, cumque id! Aut illum omnis sint, error delectus praesentium corporis facilis non.
+    </p>
+
+    <p class="par">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem deleniti odio enim. Magnam soluta distinctio atque voluptas. Illum culpa iste ea dolores impedit, in dolorum similique unde mollitia incidunt id.
+    </p>
+
+        <button id="ocultar_par">Ocultar Par</button>
+        <button id="mostrar_par">Mostrar Par</button>
+
+    <script>
+        $(document).ready(function() {
+            $("#ocultar_par").click(function(){
+                $(".par").hide();
+            })
+            $("#mostrar_par").click(function(){
+                $(".par").show();
+            })
+        });
+    </script>    
+</body>
+</html>
