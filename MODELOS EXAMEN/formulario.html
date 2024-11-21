@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validar Formulario</title>
+    <script src="formulario.js"></script>
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>VALIDAR FORMULARIO</h1>
+
+    <label for="nombre">Nombre:</label><br>
+    <input id="nombre" type="text"><span class="error" id="campo1"></span><br><br>
+
+    <label for="apellidos">Apellidos:</label><br>
+    <input id="apellidos" type="text"><span class="error" id="campo2"></span><br><br>
+
+    <label for="email">Email:</label><br>
+    <input id="email" type="email"><span class="error" id="campo3"></span><br><br>
+
+    <label for="password">Contraseña:</label><br>
+    <input id="password" type="password" name=""><span class="error" id="campo4"></span><br><br>
+
+    <label for="r_password">Repetir Contraseña:</label><br>
+    <input id="r_password" type="password" name=""><span class="error" id="campo5"></span><br><br>
+
+    <label for="dni">DNI:</label><br>
+    <input id="dni" type="text" name=""><span class="error" id="campo6"></span><br><br>
+
+    <label for="verificacion">Acepta política privacidad</label><br>
+    <input id="verificacion" type="checkbox" value="off"><span class="error" id="campo7"></span><br><br>
+
+    <button onclick="validar(document.getElementsByTagName('input'))">Validar</button>
+
+</body>
+</html>
