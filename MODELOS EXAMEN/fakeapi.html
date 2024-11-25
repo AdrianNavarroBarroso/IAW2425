@@ -84,7 +84,41 @@
         </div>
     </div>
     <script>
-        
+        $(document).ready(function () {
+            $('#btn-producto').click(function () {
+                var codProducto = $('#codProducto').val();
+
+                $.get(`https://fakestoreapi.com/products/${codProducto}`, function (data) {
+                    var producto = `<h2>Producto: ${data.title}</h2>
+                                    <p><strong>Descripción:</strong> ${data.description}</p>
+                                    <p><strong>Precio:</strong> $${data.price}</p>
+                                    <img src="${data.image}" alt="${data.title}" style="width: 200px;">`;
+                    $('#resultados').html(producto);
+                    
+                }).fail(function () {
+                    $('#resultados').html('<p>Hubo un error al obtener el producto. Intenta de nuevo.</p>');
+                });
+            });
+
+            $('#btn-todos').click(function () {
+                $.get('https://fakestoreapi.com/products', function (data) {
+                    var productosHTML = '<h2>Todos los productos:</h2>';
+                    data.forEach(function (producto) {
+                        productosHTML += `<div>
+                                            <h3>${producto.title}</h3>
+                                            <p><strong>Descripción:</strong> ${producto.description}</p>
+                                            <p><strong>Precio:</strong> $${producto.price}</p>
+                                            <img src="${producto.image}" alt="${producto.title}" style="width: 100px;">
+                                        </div>`;
+                    });
+                    $('#resultados').html(productosHTML);
+
+                }).fail(function () {
+                    $('#resultados').html('<p>Hubo un error al obtener los productos. Intenta de nuevo.</p>');
+                });
+            });
+        });
+
     </script>
 </body>
 
