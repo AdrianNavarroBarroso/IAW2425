@@ -94,7 +94,7 @@
                                     <p><strong>Precio:</strong> $${data.price}</p>
                                     <img src="${data.image}" alt="${data.title}" style="width: 200px;">`;
                     $('#resultados').html(producto);
-                    
+
                 }).fail(function () {
                     $('#resultados').html('<p>Hubo un error al obtener el producto. Intenta de nuevo.</p>');
                 });
@@ -107,7 +107,7 @@
                         productosHTML += `<div>
                                             <h3>${producto.title}</h3>
                                             <p><strong>Descripción:</strong> ${producto.description}</p>
-                                            <p><strong>Precio:</strong> $${producto.price}</p>
+                                            <p><strong>Precio:</strong> ${producto.price}</p>
                                             <img src="${producto.image}" alt="${producto.title}" style="width: 100px;">
                                         </div>`;
                     });
