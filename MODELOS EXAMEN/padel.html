@@ -93,7 +93,34 @@
         </form>
      </div>
     <script>
-        
+        $(document).ready(function () {
+            $("#fecha").datepicker({
+                dateFormat: "dd/mm/yy",
+                minDate: 0, 
+                maxDate: "+1M"   
+            });
+
+            $("#reserva").click(function (e) {
+                e.preventDefault(); 
+
+                let fecha = $("#fecha").val();
+                let pista = $("#pista").val();
+                let hora = $("#hora option:selected").text();
+                let precioBase = parseFloat(hora.match(/\d+/)[0]);
+                let necesitaLuz = $("#luz").is(":checked");
+                let precioLuz = necesitaLuz ? 4 : 0;
+
+                let precioTotal = precioBase + precioLuz;
+
+                if (fecha) {
+                    $("#diaReserva").text("Reserva confirmada para el día: ${fecha}");
+                    $("#totalPrecio").text("Precio total: ${precioTotal} €");
+                } else {
+                    alert("Por favor, selecciona una fecha antes de reservar.");
+                }
+            });
+        });
+
     </script>
 </body>
 </html>
