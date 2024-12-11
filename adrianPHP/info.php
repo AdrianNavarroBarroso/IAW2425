@@ -6,6 +6,9 @@
     <title>phpinfo</title>
 </head>
 <body>
-    <?php phpinfo();?>
+    <?php 
+        phpinfo();
+    ?>
+    
 </body>
 </html>
