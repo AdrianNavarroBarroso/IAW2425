@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    $(document).ready(function () {
+        var frutas = ["Manzana", "Banana", "Naranja", "Uva"];
+    
+        // Usando jQuery.each para recorrer el array
+        $.each(frutas, function (indice, valor) {
+            console.log("Índice: " + indice + ", Valor: " + valor);
+        });
+    
+        // También puedes recorrerlo con forEach (nativo de JavaScript)
+        frutas.forEach(function (valor, indice) {
+            console.log("Índice: " + indice + ", Valor: " + valor);
+        });
+    });
+</script>
+</body>
+</html>
+

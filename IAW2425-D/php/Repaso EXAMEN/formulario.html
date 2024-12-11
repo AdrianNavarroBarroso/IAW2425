@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario con Validación de DNI</title>
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        .success {
+            color: green;
+            font-size: 1em;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 1em;
+        }
+        label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <form id="registrationForm">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <div class="error" id="errorNombre"></div>
+
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos" name="apellidos" required>
+        <div class="error" id="errorApellidos"></div>
+
+        <label for="correo">Correo (opcional):</label>
+        <input type="email" id="correo" name="correo">
+        <div class="error" id="errorCorreo"></div>
+
+        <label for="dni">DNI:</label>
+        <input type="text" id="dni" name="dni" maxlength="9" required>
+        <div class="error" id="errorDni"></div>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" minlength="8" required>
+        <div class="error" id="errorPassword"></div>
+
+        <label for="passwordConfirm">Confirmar Contraseña:</label>
+        <input type="password" id="passwordConfirm" name="passwordConfirm" required>
+        <div class="error" id="errorPasswordConfirm"></div>
+
+        <div>
+            <input type="checkbox" id="politicas" name="politicas" required>
+            <label for="politicas">Acepto las políticas de privacidad</label>
+        </div>
+        <div class="error" id="errorPoliticas"></div>
+
+        <button type="submit">Registrarse</button>
+    </form>
+    <p id="resultado" class="success"></p>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+        const resultado = document.getElementById('resultado');
+
+        const letrasDNI = "TRWAGMYFPDXBNJZSQVHLCKE";
+
+        // Función para validar el DNI
+        function validarDNI(dni) {
+            if (!/^\d{8}[A-Z]$/.test(dni)) return false;
+
+            const numero = parseInt(dni.slice(0, 8), 10);
+            const letra = dni[8];
+            const letraCalculada = letrasDNI[numero % 23];
+
+            return letra === letraCalculada;
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            
+            // Limpiar mensajes previos
+            document.querySelectorAll('.error').forEach(err => err.textContent = '');
+            resultado.textContent = '';
+
+            const nombre = document.getElementById('nombre').value.trim();
+            const apellidos = document.getElementById('apellidos').value.trim();
+            const correo = document.getElementById('correo').value.trim();
+            const dni = document.getElementById('dni').value.trim().toUpperCase();
+            const password = document.getElementById('password').value;
+            const passwordConfirm = document.getElementById('passwordConfirm').value;
+            const politicas = document.getElementById('politicas').checked;
+
+            let isValid = true;
+
+            // Validaciones
+            if (nombre.length < 3) {
+                document.getElementById('errorNombre').textContent = 'El nombre debe tener al menos 3 caracteres.';
+                isValid = false;
+            }
+
+            if (apellidos.length < 2) {
+                document.getElementById('errorApellidos').textContent = 'Los apellidos deben tener al menos 2 caracteres.';
+                isValid = false;
+            }
+
+            if (dni.length !== 9 || !validarDNI(dni)) {
+                document.getElementById('errorDni').textContent = 'El DNI no es válido. Debe tener 8 números y una letra válida.';
+                isValid = false;
+            }
+
+            if (password.length < 8) {
+                document.getElementById('errorPassword').textContent = 'La contraseña debe tener al menos 8 caracteres.';
+                isValid = false;
+            }
+
+            if (password !== passwordConfirm) {
+                document.getElementById('errorPasswordConfirm').textContent = 'Las contraseñas no coinciden.';
+                isValid = false;
+            }
+
+            if (!politicas) {
+                document.getElementById('errorPoliticas').textContent = 'Debes aceptar las políticas de privacidad.';
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Generar usuario
+                const username = `${nombre.slice(0, 3)}${apellidos.slice(0, 2)}${dni.slice(-2)}`.toLowerCase();
+                resultado.textContent = `Registro exitoso. Tu nombre de usuario es: ${username}`;
+            }
+        });
+    </script>
+</body>
+</html>
