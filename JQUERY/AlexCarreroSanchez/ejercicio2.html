@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 2</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+
+    #resultado {
+        padding: 20px;
+    }
+
+  </style>
+  <script>
+    $(document).ready(function(){
+      $("#enviar").click(function(){
+        var lat = $("#lat").val();
+        var lon = $("#lon").val();
+        var apiKey = "bbf51cee14cc4c02098b0aae69cd97b9";
+        var url = "http://api.openweathermap.org/data/2.5/air_pollution?lat=" + lat + "&lon="+ lon + "&appid=" + apiKey;
+        if (lat == "" || lon == "") {
+            $("#resultado").html("Por favor rellene todos los campos.");
+            $("#resultado").css("background-color", "white")
+        }
+        else {
+        $.ajax({
+          url: url,
+          type: "GET",
+          dataType: "json",
+          success: function(data){
+            console.log(data);
+            var calidadAire = data.list[0].main.aqi;
+            var co = data.list[0].components.co;
+            var so2 = data.list[0].components.so2;
+            var pm2_5 = data.list[0].components.pm2_5;
+            if (calidadAire == 1) {
+                calidadAire = "Bueno";
+                $("#resultado").css("background-color", "green")
+            }
+            if (calidadAire == 2) {
+                calidadAire = "Aceptable";
+                $("#resultado").css("background-color", "yellow")
+            }
+            if (calidadAire == 3) {
+                calidadAire = "Moderado";
+                $("#resultado").css("background-color", "orange")
+            }
+            if (calidadAire == 4) {
+                calidadAire = "Malo";
+                $("#resultado").css("background-color", "purple")
+            }
+            if (calidadAire == 5) {
+                calidadAire = "Muy malo";
+                $("#resultado").css("background-color", "red")
+            }
+            $("#resultado").html("<b>Calidad del aire:</b> "+ calidadAire + "<br><br>" +
+            "<b>Cantidad de monóxido de carbono (CO):</b> " + co + " μ/m<sup>3</sup><br><br>" +
+            "<b>Cantidad de dióxido de azufre (SO<sub>2</sub>):</b> " + so2 + " μ/m<sup>3</sup><br><br>" +
+            "<b>Cantidad de partículas finas (PM<sub>2.5</sub>):</b> " + pm2_5 + " μ/m<sup>3</sup>");
+        },
+          error: function(xhr, status, error){
+            $("#resultado").html("Error de ajax.");
+          }
+        });
+    }
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <h1>Air Pollution API</h1>
+
+  <label for="lat">Introduzca la latitud:</label> <br><br>
+
+  <input type="text" id="lat" name="latitud"> <br><br>
+
+  <label for="lat">Introduzca la longitud:</label> <br><br>
+
+  <input type="text" id="lon" name="longitud"> <br><br>
+
+  <button id="enviar">Enviar</button> <br><br>
+
+  <div id="resultado"></div>
+
+</body>
+</html>

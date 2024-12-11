@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Diálogo con animación</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <script>
+    $( function() {
+      $( "#dialogo" ).dialog({
+        autoOpen: false,
+        show: {
+          effect: "bounce",
+          duration: 1000
+        },
+        hide: {
+          effect: "size",
+          duration: 1000
+        }
+      });
+   
+      $( "#abrir" ).on( "click", function() {
+        $( "#dialogo" ).dialog( "open" );
+      });
+    } );
+    </script>
+</head>
+
+<body>
+   
+    <div id="dialogo" title="Diálogo simple">
+        <p>Esto es un ejemplo de diálogo simple con animación. Pulsa 'x' para cerrarlo con una explosión.</p>
+    </div>
+   
+    <button id="abrir">Abrir diálogo</button>
+   
+</body>
+</html>
