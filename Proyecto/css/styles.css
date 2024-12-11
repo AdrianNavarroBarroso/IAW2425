@@ -1,0 +1,35 @@
+/* Estilos generales */
+body {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.card {
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.form-control-lg {
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+}
+
+.btn-lg {
+    border-radius: 0.75rem;
+    padding: 1rem 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card {
+        margin: 1rem;
+    }
+    
+    .display-5 {
+        font-size: 2rem;
+    }
+}

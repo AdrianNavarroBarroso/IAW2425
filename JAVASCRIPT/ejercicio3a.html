@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcular letra del DNI</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .calculadora {
+            text-align: center;
+            max-width: 300px;
+            margin: 10px;
+        }
+        .dni {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        .resultado {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculadora">
+        <h1>Calculadora de Letra del DNI</h1>
+        <label for="dni">Introduce tu DNI:</label>
+        <input type="text" id="dni" maxlength="8">
+        <button onclick="calcularLetraDNI()">Calcular Letra</button>
+        <div class="resultado" id="resultado"></div>
+        <div class="error" id="error"></div>
+    </div>
+
+    <script>
+        function calcularLetraDNI() {
+            const dni = document.getElementById('dni').value;
+            const letras = ['T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 
+                            'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'];
+
+            // Limpiar mensajes previos
+            document.getElementById('result').textContent = '';
+            document.getElementById('error').textContent = '';
+
+            // Validación de longitud y caracteres numéricos
+            if (dni.length !== 8 || isNaN(dni)) {
+                document.getElementById('error').textContent = 'El DNI debe tener 8 dígitos numéricos.';
+                return;
+            }
+
+            // Cálculo de la letra
+            const resto = dni % 23;
+            const letra = letras[resto];
+
+            // Mostrar el resultado
+            document.getElementById('resultado').textContent = `La letra correspondiente es: ${letra}`;
+        }
+    </script>
+</body>
+</html>

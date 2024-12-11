@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fade In y Fade Out</title>
+    <script src="jquery-3.7.1.js"></script>
+    <style>
+        #div1 {
+            height: 200px;
+            width: 200px;
+            background-color: MediumPurple;
+            float: left;
+            margin: 10px;
+        }
+
+        #div2 {
+            height: 200px;
+            width: 200px;
+            background-color: MediumSpringGreen;
+            float: left;
+            margin: 10px;
+        }
+
+        #div3 {
+            height: 200px;
+            width: 200px;
+            background-color: Turquoise;
+            float: left;
+            margin: 10px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('#aparecer').click(function () {
+                $('.div').fadeIn()
+            })
+        });
+        $(document).ready(function () {
+            $('#desaparecer').click(function () {
+                $('.div').fadeOut()
+            })
+        });
+        $(document).ready(function () {
+            $('#alternar').click(function () {
+                $('.div').fadeToggle(1000)
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <div class="div" id="div1"></div>
+    <div class="div" id="div2"></div>
+    <div class="div" id="div3"></div>
+    <div style="position: absolute; top: 240px; ">
+        <button id="aparecer">Aparecer</button>
+        <button id="desaparecer">Desaparecer</button>
+        <button id="alternar">Alternar</button>
+    </div>
+
+</body>
+
+</html>
