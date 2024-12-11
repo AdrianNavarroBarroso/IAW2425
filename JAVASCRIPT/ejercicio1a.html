@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ejercicio 1 de JavaScript</title>
+        <style>
+            body {
+                display: flex;
+                justify-content: center; 
+                align-items: center; 
+                height: 100vh;     
+                margin: 0;
+            }
+
+            .contenedor {
+                display: flex;
+                gap: 20px;
+            }
+
+            .circulo-contenedor {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .circulo {
+                width: 300px;
+                height: 300px;
+                border-radius: 50%; 
+            }
+
+            #roja {
+                background-color: red;
+            }
+
+            #verde {
+                background-color: green;
+            }
+
+            #azul {
+                background-color: blue;
+            }
+
+            button {
+                padding: 15px 25px;
+                font-size: 16px; 
+                cursor: pointer;
+            }
+        </style>
+        <script>
+            function ocultarCirculo(id) {
+                document.getElementById(id).style.visibility = 'hidden';
+            }
+        </script>
+    </head>
+    <body>
+        <div class="contenedor">
+            <div class="circulo-contenedor">
+                <div class="circulo" id="roja"></div>
+                <button onclick="ocultarCirculo('roja')">Ocultar Roja</button>
+            </div>
+            <div class="circulo-contenedor">
+                <div class="circulo" id="verde"></div>
+                <button onclick="ocultarCirculo('verde')">Ocultar Verde</button>
+            </div>
+            <div class="circulo-contenedor">
+                <div class="circulo" id="azul"></div>
+                <button onclick="ocultarCirculo('azul')">Ocultar Azul</button>
+            </div>
+        </div>
+    </body>
+</html>

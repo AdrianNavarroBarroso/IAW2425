@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de masa corporal</title>
+</head>
+
+<body>
+
+    <h1>Calculadora de IMC</h1>
+
+    <p>Introduzca su altura y peso:</p>
+    <input id="altura" type="text" placeholder="Aquí la altura">
+    <input id="peso" type="text" placeholder="Aquí el peso">
+    <button onclick="calculaIMC()">Calcular</button>
+
+    <p id="resultado"></p>
+    <p id="recomendacion"></p>
+
+    <script>
+
+        function calculaIMC() {
+
+            var peso = parseFloat(document.getElementById("peso").value);
+            var alturaCentimetros = parseFloat(document.getElementById("altura").value);
+            var alturaMetros = alturaCentimetros / 100;
+            var operacion = peso / (alturaMetros * alturaMetros);
+            var indice = operacion.toFixed(2);
+
+            document.getElementById("resultado").innerHTML = "Su IMC es " + indice;
+
+            if (indice < 18.5) {
+                document.getElementById("recomendacion").innerHTML = "Su peso es inferior al normal.";
+            }
+            else if (indice <= 24.9) {
+                document.getElementById("recomendacion").innerHTML = "Su peso es normal.";
+            }
+            else if (indice <= 30) {
+                document.getElementById("recomendacion").innerHTML = "Su peso es superior al normal";
+            }
+            else if (indice > 30) {
+                document.getElementById("recomendacion").innerHTML = "Se encuentra en la categoría obesidad.";
+            }
+        }
+
+    </script>
+
+</body>
+</html>

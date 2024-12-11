@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+</head>
+
+<body>
+
+    <label for="">Nombre:</label><input id="nombre" type="text"><span class="error" id="campo1"></span><br>
+
+    <label for="">Apellidos:</label><input id="apellidos" type="text"><span class="error" id="campo2"></span><br>
+
+    <label for="">Email:</label><input id="email" type="email"><span class="error" id="campo3"></span><br>
+
+    <label for="">PIN:</label><input id="p1" type="pin1" name=""><span class="error" id="campo4"></span><br>
+
+    <label for="">Repita PIN:</label><input id="pin2" type="password" name=""><span class="error" id="campo5"></span><br>
+
+    <label for="">DNI:</label><input id="dni" type="text"><span class="error" id="campo6"></span><br>
+
+    <button onclick="validar(document.getElementsByTagName('input'))">Validar</button>
+
+    <script>
+
+        function validar(elementos){
+            let estanCorrectos = true;
+            for (var i=0;i<elementos.length;i++){
+                document.getElementById("campo"+(i+1).toString()).innerHTML = ""; // Por defecto el campo está OK       
+                if (elementos[i].value == "" || (i==6 && !elementos[i].checked)){
+                    // Si el campo está vacío o (el campo es la casilla de verificación y no está marcada) entonces ...
+                    document.getElementById("campo"+(i+1).toString()).innerHTML = "El campo " + elementos[i].id + " está vacío";
+                    estanCorrectos = false;
+                }
+                
+            }
+            if (!validarEmail()){ // Si no es válido el correo
+                document.getElementById("campo3").innerHTML = "Email no válido";        
+                estanCorrectos = false;
+            }
+            if (!validaPIN()){ // Si no son válidas las contraseñas
+                document.getElementById("campo4").innerHTML = "La contraseña no cumple con requisitos de longitud o no coinciden";        
+                document.getElementById("campo5").innerHTML = "La contraseña no cumple con requisitos de longitud o no coinciden";
+                estanCorrectos = false;
+            }
+            if (!validarDNI()){
+                document.getElementById("campo6").innerHTML = "DNI no válido (12345678X)";
+                estanCorrectos = false;
+            }
+            return estanCorrectos;
+        }
+
+        function validarEmail(){              
+            var valido;
+            var emailField = document.getElementById('email');
+            var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+            if( validEmail.test(emailField.value) ){
+                valido=true;
+            }else{
+                valido=false;
+            }
+            return valido;
+        } 
+        function validaPIN(){
+            let clave1 = document.getElementById("pin1").value;
+            let clave2 = document.getElementById("pin2").value;
+            let pinOK = true; // Cumple con los requisitos establecidos
+            if (clave1.length<8 || (clave1!=clave2))
+                pinOK = false;
+            return pinOK;
+        }
+
+        function validarDNI(){
+            var letra=['T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'];
+            var cadena = document.getElementById("dni").value; // DNI Completo
+            var numero = parseInt(cadena.substring(0,8)); // Parte numérica
+            var letraUsuario = cadena[8]; // Letra escrita por el usuario
+            var letraReal = letra[numero%23]; // Letra "real" del DNI calculada según "fórmula"
+            var dniValido =true;
+            if (letraUsuario!=letraReal) // Si no coincide letras es falso
+                dniValido = false;
+            return dniValido;
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script Mensajes Red Social</title>
+    <script src="mensajes.js"></script>
+</head>
+<body>
+    <h1>Mensajes</h1>
+    <div id="cajaInsertar">
+        <label>Postea tu mensaje</label>
+        <input type="text" id="mensajeNuevo">
+        <button id="postear" onclick="agregarMensaje()">Postear</button>
+        <button id="ordenar" onclick="ordenar()">Ordenar</button>
+    </div>
+    <div id="cajaMensajes">
+        <div id="verMensajes"></div>
+    </div>
+</body>
+</html>
