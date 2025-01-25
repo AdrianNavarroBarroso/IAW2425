@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 1 refuerzo</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $("#consultar").click(function(){
+        var ciudad = $("#ciudad").val();
+        var apiKey = "bbf51cee14cc4c02098b0aae69cd97b9";
+        var url = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=" + apiKey + "&units=metric";
+
+        $.ajax({
+          url: url,
+          type: "GET",
+          dataType: "json",
+          success: function(data){
+            console.log(data);
+            var clima = data.weather[0].description;
+            var temperatura = data.main.temp;
+            $("#resultado").html("El clima en " + ciudad + " es " + clima + " con una temperatura de " + temperatura + "°C.");
+          },
+          error: function(xhr, status, error){
+            $("#resultado").html("Error al obtener datos del clima: " + error);
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <h1>Consulta de clima</h1>
+
+  <label for="ciudad">Ciudad:</label>
+
+  <input type="text" id="ciudad" name="ciudad" placeholder="Ingresa el nombre de la ciudad">
+
+  <button id="consultar">Consultar</button>
+
+  <div id="resultado"></div>
+
+</body>
+</html>

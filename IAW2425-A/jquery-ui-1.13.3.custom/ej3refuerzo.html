@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 3 refuerzo</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $("#buscarPelicula").click(function(){
+        var apiKey = "8ee3bb5a";
+        var titulo = $("#tituloPelicula").val();
+        var url = "http://www.omdbapi.com/?apikey=" + apiKey + "&t=" + titulo;
+
+        $.ajax({
+          url: url,
+          type: "GET",
+          dataType: "json",
+          success: function(data){
+            console.log(data);
+            if (data.Response === "True") {
+              var titulo = data.Title;
+              var ano = data.Year;
+              var director = data.Director;
+              var sinopsis = data.Plot;
+              var poster = data.Poster;
+              
+              $("#titulo").text("Título: " + titulo);
+              $("#ano").text("Año: " + ano);
+              $("#director").text("Director: " + director);
+              $("#sinopsis").text("Sinopsis: " + sinopsis);
+              $("#poster").attr("src", poster);
+            } else {
+              $("#resultado").text("No se encontró ninguna película con ese título.");
+            }
+          },
+          error: function(xhr, status, error){
+            $("#resultado").text("Error al buscar la película: " + error);
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <h1>Buscador de películas</h1>
+
+  <label for="tituloPelicula">Título de la película:</label>
+
+  <input type="text" id="tituloPelicula" name="tituloPelicula" placeholder="Ingresa el título de la película">
+
+  <button id="buscarPelicula">Buscar</button>
+
+  <div id="resultado">
+
+    <p id="titulo"></p>
+    <p id="ano"></p>
+    <p id="director"></p>
+    <p id="sinopsis"></p>
+    <img id="poster" src="" alt="">
+
+  </div>
+
+</body>
+</html>

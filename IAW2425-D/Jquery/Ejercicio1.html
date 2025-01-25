@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 de JQuery</title>
+    <script src="../Jquery-JS/jquery-3.7.1.js"></script>
+</head>
+<body>
+    <h1>Ejemplo JQuery</h1>
+    <p class="impar">Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit esse quia, 
+        ut optio velit, dignissimos at, 
+        animi eaque iure expedita eum fugiat officia accusantium 
+        quos dolorum laudantium odio labore sequi?</p>
+    <p class="par">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sit quae, cupiditate repudiandae fugiat rerum doloremque blanditiis! Incidunt, veniam culpa aliquid, tempore accusantium minus excepturi soluta officia eaque aut iure.</p>
+        <button id="ocultar">Clic para ocultar parrafo </button>
+        <button id="mostrar">Para mostrar parrafo</button>
+        <button id="alterna">Para alternar</button>
+    <script>
+        $(document).ready(function () {
+            $("#ocultar").click(function(){
+                $(".par").hide(100);
+            })
+            $("#mostrar").click(function(){
+                $(".par").show(1000);
+            })
+            $("#alterna").click(function(){
+                $(".par").toggle(1000);
+            })
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 4 refuerzo</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $("#buscarUsuario").click(function(){
+        var nombreUsuario = $("#nombreUsuario").val();
+        var url = "https://api.github.com/users/" + nombreUsuario;
+
+        $.ajax({
+          url: url,
+          type: "GET",
+          dataType: "json",
+          success: function(data){
+            console.log(data);
+            $("#nombre").text("Nombre de usuario: " + data.login);
+            $("#nombreCompleto").text("Nombre completo: " + data.name);
+            $("#ubicacion").text("Ubicación: " + data.location);
+            $("#bio").text("Biografía: " + data.bio);
+            $("#avatar").attr("src", data.avatar_url);
+          },
+          error: function(xhr, status, error){
+            $("#resultado").text("Error al buscar el usuario: " + error);
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <h1>Información de usuario de GitHub</h1>
+
+  <label for="nombreUsuario">Nombre de usuario de GitHub:</label>
+
+  <input type="text" id="nombreUsuario" name="nombreUsuario" placeholder="Ingresa el nombre de usuario de GitHub">
+
+  <button id="buscarUsuario">Buscar</button>
+
+  <div id="resultado">
+
+    <p id="nombre"></p>
+    <p id="nombreCompleto"></p>
+    <p id="ubicacion"></p>
+    <p id="bio"></p>
+    <img id="avatar" src="" alt="">
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 2 refuerzo</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $("#mostrarFoto").click(function(){
+        var apiKey = "5AV_9wSH8p_iLtiJwr_aMAdAfAf_oejU5H1J4LCSXO8";
+        var url = "https://api.unsplash.com/photos/random?client_id=" + apiKey;
+
+        $.ajax({
+          url: url,
+          type: "GET",
+          dataType: "json",
+          success: function(data){
+            console.log(data);
+            var imageUrl = data.urls.small;
+            $("#fotoAleatoria").attr("src", imageUrl);
+          },
+          error: function(xhr, status, error){
+            $("#fotoAleatoria").attr("src", "error.jpg");
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <h1>Fotos aleatorias de Unsplash</h1>
+  <button id="mostrarFoto">Mostrar Foto Aleatoria</button>
+  <div>
+    <img id="fotoAleatoria" src="" alt="">
+  </div>
+
+</body>
+</html>
