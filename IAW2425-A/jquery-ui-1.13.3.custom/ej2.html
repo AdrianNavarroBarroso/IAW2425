@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <script>
+    $( function() {
+      $( "#tab" ).tabs();
+        
+    } );
+    </script>
+</head>
+
+<body>
+
+    <h1>Ejemplo de tabs</h1>
+
+    <div id="tab">
+        <ul>
+            <li><a href="#tabs1">Parte 1</a></li>
+            
+            <li><a href="#tabs2">Parte 2</a></li>
+            
+            <li><a href="#tabs3">Parte 3</a></li>
+            
+            <li><a href="#tabs4">Parte 4</a></li>
+        </ul>
+        <div id="tabs1">
+            <p>Esta es la parte 1 del Tab.</p>
+        </div>
+        <div id="tabs2">
+            <p>Esta es la parte 2 del Tab.</p>
+        </div>
+        <div id="tabs3">
+            <p>Esta es la parte 3 del Tab.</p>
+        </div>
+        <div id="tabs4">
+            <p>Esta es la parte 4 del Tab.</p>
+        </div>
+    </div>
+
+</body>
+</html>

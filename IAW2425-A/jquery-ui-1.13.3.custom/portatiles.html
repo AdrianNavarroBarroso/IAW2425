@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva carrito portátiles</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <style>
+        body {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            background-color: lightgray;
+            font-size: 1.5em;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid black;
+            border-radius: 10px;
+            margin: 0 auto;
+            width: 50vw;
+            padding: 50px;
+            background-color: lightblue;
+        }
+
+        h1 {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        select {
+            font-size: 1em;
+            text-align: center;
+            width: 52vw;
+        }
+
+        input[type="text"] {
+            font-size: 1em;
+            text-align: center;
+            width: 51vw;
+        }
+
+        input[type="checkbox"] {
+            width: 3vh;
+            text-align: left !important;
+        }
+
+        button {
+            font-size: 1em;
+            text-align: center;
+            width: 52vw;
+            background-color: #007fff;
+            color: whitesmoke;
+            border-radius: 10px;
+            margin-top: 0.5em;
+        }
+
+        .lista {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Reserva carrito portátiles</h1>
+
+    <div class="container">
+
+        <form action="">
+
+            <label for="fecha">Día de la reserva:</label><br>
+
+            <input type="text" name="fecha" id="fecha" required><br>
+
+            <fieldset>
+
+                <legend>Seleccione carritos: </legend>
+
+                <div class="lista">
+
+                <label for="checkbox-1">Carrito 1</label>
+                <input class="carrito" type="checkbox" name="opciones" id="checkbox-1">
+
+                <label for="checkbox-2">Carrito 2</label>
+                <input class="carrito" type="checkbox" name="opciones" id="checkbox-2">
+
+                <label for="checkbox-3">Carrito 3</label>
+                <input class="carrito" type="checkbox" name="opciones" id="checkbox-3">
+
+                <br>
+
+                <label for="checkbox-4">Carrito 4</label>
+                <input class="carrito" type="checkbox" name="opciones" id="checkbox-4">
+
+                <label for="checkbox-5">Carrito 5</label>
+                <input class="carrito" type="checkbox" name="opciones" id="checkbox-5">
+
+                <label for="checkbox-6">Carrito 6</label>
+                <input class="carrito" type="checkbox" name="opciones" id="checkbox-6">
+
+                </div>
+
+            </fieldset><br>
+
+            <label for="hora">Hora:</label><br>
+           
+            <select id="hora" name="hora">
+                
+                <option value="8:00 - 9:00">8:00 - 9:00</option>
+                <option value="9:00 - 10:00">9:00 - 10:00</option>
+                <option value="10:00 - 11:00">10:00 - 11:00</option>
+                <option value="11:30 - 12:30">11:30 - 12:30</option>
+                <option value="12:30 - 13:30">12:30 - 13:30</option>
+                <option value="13:30 - 14:00">13:30 - 14:00</option>
+
+            </select><br>
+
+            <button id="reserva">Reserva</button>
+
+            <p id="diaReserva"></p>
+
+            <p id="totalPortatiles">Nº Portátiles: </p>
+
+        </form>
+    </div>
+    
+    <script>
+
+        $(document).ready(function () {
+            
+            $.datepicker.regional['es'] = {
+                closeText: 'Cerrar',
+                prevText: '<Ant',
+                nextText: 'Sig>',
+                currentText: 'Hoy',
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+                weekHeader: 'Sm',
+                dateFormat: 'dd/mm/yy',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: ''
+            };
+
+            $.datepicker.setDefaults($.datepicker.regional['es']);
+
+            $( function() {
+                $("#fecha").datepicker({ minDate: 1, maxDate: "2W", beforeShowDay: deshabilitarFinde });
+                } );
+
+            function deshabilitarFinde(date){
+                return [date.getDay() !== 6 && date.getDay() !== 0]
+            };
+
+            $(function() {
+                $( "fieldset" ).controlgroup();
+            })
+
+            $('#reserva').click(function (event) {
+                event.preventDefault();
+                let fecha = $('#fecha').val();
+                let hora = $('#hora').val();
+                let portatiles = $('.carrito:checked').length;
+                $('#diaReserva').text("Reserva el "+ fecha +" de "+ hora +" horas.");
+                $("#totalPortatiles").text("Nº Portátiles: "+ portatiles*15);
+            })
+
+        });
+
+    </script>
+
+</body>
+
+</html>

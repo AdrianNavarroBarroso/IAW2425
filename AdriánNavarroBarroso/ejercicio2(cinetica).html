@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENERGÍA CINÉTICA</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="masa">
+        <label for="masa">Masa (en kg):</label>
+        <input type="number" id="masa" name="" ></input>
+    </div>
+
+    <div class="velocidad">
+        <label for="masa">Velocidad (en m/s):</label>
+        <input type="number" id="velocidad" name="" ></input>
+    </div>
+
+    <div>
+        <p id="resultado"></p>
+    </div>
+
+    <button onclick="calcular()">Calcular</button>
+    <script>
+        function calcular() {
+            var masa = parseFloat(document.getElementById("masa").value);
+            var velocidad = parseFloat(document.getElementById("velocidad").value);
+            var campomasa = $('#masa').val();
+            var campovelocidad = $('#velocidad').val();
+            var velocidad2 = velocidad * velocidad;
+            var operacion = masa * velocidad2 / 2;
+            var indice = operacion.toFixed(2);
+           
+            if (indice <= 0) {
+                document.getElementById("resultado").innerHTML = "Debe introducir valores positivos";
+            }
+            else if (campomasa === '' || campovelocidad === '') {
+                document.getElementById("resultado").innerHTML = "Complete los campos";
+            }
+            else if (indice < 10) {
+
+                document.getElementById("resultado").innerHTML = "La energía cinética es baja: " + indice + " Joules";
+            }
+            else if (indice <= 100) {
+                document.getElementById("resultado").innerHTML = "La energía cinética es moderada: " + indice + " Joules";
+            }
+            else if (indice > 100) {
+                document.getElementById("resultado").innerHTML = "La energía cinética es alta: " + indice + " Joules";
+            }
+        }
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 5 refuerzo</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $("#buscarLibro").click(function(){
+        var apiKey = "AIzaSyDN6PNCHjgvkjCzBn_B5y1T14ibtwla5wM";
+        var tituloLibro = $("#tituloLibro").val();
+        var url = "https://www.googleapis.com/books/v1/volumes?q=intitle:" + tituloLibro + "&key=" + apiKey;
+
+        $.ajax({
+          url: url,
+          type: "GET",
+          dataType: "json",
+          success: function(data){
+            console.log(data);
+            if (data.totalItems > 0) {
+              var primerLibro = data.items[0].volumeInfo;
+              var titulo = primerLibro.title;
+              var autores = primerLibro.authors ? primerLibro.authors.join(", ") : "Desconocido";
+              var descripcion = primerLibro.description ? primerLibro.description : "Sin descripción disponible";
+              var imagen = primerLibro.imageLinks ? primerLibro.imageLinks.thumbnail : "https://via.placeholder.com/128x192?text=No+Disponible";
+
+              $("#resultado").html(`
+                <h3>Título: ${titulo}</h3>
+                <p>Autores: ${autores}</p>
+                <p>Descripción: ${descripcion}</p>
+                <img src="${imagen}" alt="Portada del Libro">
+              `);
+            } else {
+              $("#resultado").text("No se encontraron resultados para el libro especificado.");
+            }
+          },
+          error: function(xhr, status, error){
+            $("#resultado").text("Error al buscar el libro: " + error);
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <h1>Buscador de libros</h1>
+
+  <label for="tituloLibro">Título del libro:</label>
+
+  <input type="text" id="tituloLibro" name="tituloLibro" placeholder="Ingresa el título del libro">
+
+  <button id="buscarLibro">Buscar</button>
+
+  <div id="resultado"></div>
+
+</body>
+</html>

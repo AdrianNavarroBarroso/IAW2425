@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 6 refuerzo</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $("#buscarFotos").click(function(){
+        var apiKey = "729b58ba2ab607df2f5190e517171a48";
+        var textoBusqueda = $("#textoBusqueda").val();
+        var url = "https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=" + apiKey + "&text=" + textoBusqueda + "&format=json&nojsoncallback=1";
+
+        $.ajax({
+          url: url,
+          type: "GET",
+          dataType: "json",
+          success: function(data){
+            console.log(data);
+            if (data.photos && data.photos.photo.length > 0) {
+              var fotos = data.photos.photo;
+              $("#resultado").empty();
+              $.each(fotos, function(index, foto){
+                var fotoUrl = "https://farm" + foto.farm + ".staticflickr.com/" + foto.server + "/" + foto.id + "_" + foto.secret + ".jpg";
+                $("#resultado").append("<img src='" + fotoUrl + "' alt=''>");
+              });
+            } else {
+              $("#resultado").html("<p>No se encontraron fotos para la búsqueda especificada.</p>");
+            }
+          },
+          error: function(xhr, status, error){
+            $("#resultado").html("<p>Error al buscar las fotos: " + error + "</p>");
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <h1>Buscador de fotos de Flickr</h1>
+
+  <label for="textoBusqueda">Texto de búsqueda:</label>
+
+  <input type="text" id="textoBusqueda" name="textoBusqueda" placeholder="Ingresa el texto de búsqueda">
+
+  <button id="buscarFotos">Buscar fotos</button>
+
+  <div id="resultado"></div>
+
+</body>
+</html>

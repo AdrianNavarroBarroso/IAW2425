@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 7 refuerzo</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $("#buscarGifs").click(function(){
+        var apiKey = "siJnPA9hazu5Vv0F8BklSWKsse9aSdam";
+        var textoBusqueda = $("#textoBusqueda").val();
+        var url = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=" + textoBusqueda;
+
+        $.ajax({
+          url: url,
+          type: "GET",
+          dataType: "json",
+          success: function(data){
+            console.log(data);
+            if (data.data && data.data.length > 0) {
+              $("#resultado").empty();
+              $.each(data.data, function(index, gif){
+                var gifUrl = gif.images.fixed_height.url;
+                $("#resultado").append("<img src='" + gifUrl + "' alt=''>");
+              });
+            } else {
+              $("#resultado").html("<p>No se encontraron GIFs para la búsqueda especificada.</p>");
+            }
+          },
+          error: function(xhr, status, error){
+            $("#resultado").html("<p>Error al buscar los GIFs: " + error + "</p>");
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <h1>Buscador de GIFs de Giphy</h1>
+
+  <label for="textoBusqueda">Texto de búsqueda:</label>
+
+  <input type="text" id="textoBusqueda" name="textoBusqueda" placeholder="Ingresa el texto de búsqueda">
+
+  <button id="buscarGifs">Buscar GIFs</button>
+
+  <div id="resultado"></div>
+
+</body>
+</html>

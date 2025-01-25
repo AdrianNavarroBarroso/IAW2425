@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <title>Fake Store API</title>
+    <style>
+        body {
+            font-family: 'Alexandria', sans-serif;
+        }
+
+        h1 {
+            font-size: xx-large;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .contenedor {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+        }
+
+        .formulario {
+            width: 80%;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            margin: 50px auto;
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+            padding: 50px;
+            box-shadow: 10px 10px 10px #7c7e8b;
+            overflow: auto;
+            border: 1px dashed black;
+
+        }
+
+        .formulario>* {
+            margin: 10px;
+            padding: 10px;
+        }
+
+        input,
+        label {
+            font-size: 1.5em;
+        }
+
+        button {
+            background-color: #373841;
+            font-size: x-large;
+            height: 60px;
+            width: 25%;
+            border-radius: 20px;
+            color: white;
+            margin-left: 2%;
+            margin-top: 1%;
+        }
+        button:hover {
+            background-color: #545662;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contenedor">
+        <div class="formulario">
+            <h1>Fake Store API</h1>
+            <label for="codProducto">Categoría</label>
+            <input type="text" name="categoria" id="categoria">
+            <br>
+            <label for="botones">Acción:</label>
+            <button id="btn-todos">Ver</button>
+            <div id="resultados">
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $( function() {
+                var availableTags = [
+                "electronics",
+                "jewelery",
+                "men's clothing",
+                "women's clothing"
+                ];
+                $( "#categoria" ).autocomplete({
+                source: availableTags
+                });
+            });
+
+            $(document).ready(function(){
+                $("#btn-todos").click(function(){
+
+                    $.ajax({
+
+                        url:"https://fakestoreapi.com/products",
+                        dataType:'json',
+
+                        success:function(datos){
+                            console.log(datos);
+                            var categoria = $("#categoria").val();
+                            $("#resultados").empty();
+                            for(var i = 0; i < datos.length; i++){
+                                
+                                if(datos[i].category==categoria){
+                                    
+                                    var contenedor= $("<div id='contenedor'></div>");
+                                    contenedor.append("<img src="+ datos[i].image +"></p>"+ "<br>")
+                                    contenedor.append("<p>Titulo: " + datos[i].title + "</p><br>");
+                                    contenedor.append("<p>Categoria: " + datos[i].category + "</p><br>");
+                                    contenedor.append("<p>Puntuación: " + datos[i].rating.rate + "</p><br>");
+                                    contenedor.append("<p>Descripción: " +   datos[i].description + "</p><br>");
+                                    contenedor.append("<p>Precio: " + datos[i].price + " €");
+                                    $("#resultados").append(contenedor);
+                                }
+                            }
+                        },
+
+                        error:function(){
+
+                            $("#resultados").text("Se ha producido un error al intentar conectar con el servidor.");
+                        }
+
+                    });
+                });
+            });
+
+    </script>
+
+</body>
+
+</html>

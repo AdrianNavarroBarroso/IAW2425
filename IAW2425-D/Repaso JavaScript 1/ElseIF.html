@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprobador de Peso natural</title>
+</head>
+<body>
+    <h1>Calculador de Obesidad</h1>
+
+    ¿Cual es su altura en CM?: <input type="number" id="altura">
+    ¿Cual es su peso en KG?: <input type="number" id="peso">
+
+    <button onclick="convertir()">Comprobar estado</button>
+
+    <script>
+
+    function convertir(){
+    let alturaCN = document.getElementById("altura").value;
+    let pesoKG = document.getElementById("peso").value;
+
+    if (alturaCN && pesoKG) { let alturaM = alturaCN / 100; // Convertir altura a metros 
+        let imc = pesoKG / (alturaM * alturaM); // Calcular IMC 
+        let mensaje = ""; 
+        if (imc < 18.5) 
+        { mensaje = "Peso inferior al normal. IMC: " + imc.toFixed(2); } 
+        else if (imc >= 18.5 && imc <= 24.9) 
+        { mensaje = "Peso normal. IMC: " + imc.toFixed(2); } 
+        else if (imc >= 25.0 && imc <= 29.9) 
+        { mensaje = "Peso superior al normal. IMC: " + imc.toFixed(2); } 
+        else if (imc >= 30.0) 
+        { mensaje = "Obesidad. IMC: " + imc.toFixed(2); } 
+        alert(mensaje); } else { alert("Por favor, ingrese tanto su altura como su peso."); } }   
+    
+
+
+    </script>
+
+</body>
+</html>
