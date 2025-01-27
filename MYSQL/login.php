@@ -2,7 +2,7 @@
 // Conexión a la base de datos
 $servername = "sql107.thsite.top";
 $username = "thsi_38097545";
-$password = "RHYq?oC!";
+$password = "";
 $database = "thsi_38097545_proyecto";
 $enlace = mysqli_connect($servername, $username, $password, $database);
 
