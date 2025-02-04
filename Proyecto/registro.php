@@ -1,75 +1,64 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 session_start();
+session_name('myapp_session');
+require 'includes/conexion.php';
 
-include 'includes/conexion.php';
+$departamentos = [
+    'matematicas' => 'Matemáticas',
+    'ciencias' => 'Ciencias Naturales', 
+    'informatica' => 'Informática',
+    'lengua' => 'Lengua y Literatura',
+    'historia' => 'Historia'
+];
 
 $error = '';
-$exito = '';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Sanitizar y capturar datos
-    $nombre = $conn->real_escape_string(trim($_POST['nombre']));
-    $apellidos = $conn->real_escape_string(trim($_POST['apellidos']));
-    $usuario = $conn->real_escape_string(trim($_POST['usuario']));
-    $email = $conn->real_escape_string(trim($_POST['email']));
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nombre = trim($_POST['nombre']);
+    $apellidos = trim($_POST['apellidos']);
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+    $confirm_password = $_POST['confirm_password']; 
+    $departamento = $_POST['departamento'];
 
-    // Validaciones
-    $campos_requeridos = [
-        'nombre' => 'Nombre',
-        'apellidos' => 'Apellidos',
-        'usuario' => 'Nombre de usuario',
-        'email' => 'Correo electrónico',
-        'password' => 'Contraseña'
-    ];
-
-    foreach ($campos_requeridos as $campo => $nombre_campo) {
-        if (empty($_POST[$campo])) {
-            $error = "El campo <strong>$nombre_campo</strong> es obligatorio";
-            break;
-        }
-    }
-
-    if (!$error) {
-        if ($password !== $confirm_password) {
-            $error = "Las contraseñas no coinciden";
-        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $error = "Formato de email inválido";
-        } elseif (strlen($password) < 8) {
-            $error = "La contraseña debe tener al menos 8 caracteres";
-        } else {
-            // Verificar duplicados
-            $stmt_check = $conn->prepare("SELECT id FROM usuarios WHERE usuario = ? OR email = ?");
-            $stmt_check->bind_param("ss", $usuario, $email);
-            $stmt_check->execute();
-            $result = $stmt_check->get_result();
-
-            if ($result->num_rows > 0) {
-                $error = "El usuario o email ya están registrados";
+    // Validación modificada: apellidos no es obligatorio
+    if (empty($nombre) || empty($email) || empty($password)) {
+        $error = "Nombre, email y contraseña son obligatorios";
+    } elseif ($password !== $confirm_password) { 
+        $error = "Las contraseñas no coinciden";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = "Formato de email inválido";
+    } elseif (!preg_match("/@iesamachado\.org$/i", $email)) {
+        $error = "Solo se permiten correos del dominio @iesamachado.org";
+    } elseif (!array_key_exists($departamento, $departamentos)) {
+        $error = "Departamento no válido";
+    } else {
+        try {
+            $stmt = $conn->prepare("SELECT id FROM profesores WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            
+            if ($stmt->get_result()->num_rows > 0) {
+                $error = "Este correo ya está registrado";
             } else {
-                // Registrar usuario
                 $password_hash = password_hash($password, PASSWORD_DEFAULT);
-                $stmt = $conn->prepare("INSERT INTO usuarios 
-                    (nombre, apellidos, usuario, email, password) 
-                    VALUES (?, ?, ?, ?, ?)");
                 
-                $stmt->bind_param("sssss", $nombre, $apellidos, $usuario, $email, $password_hash);
-
+                $stmt = $conn->prepare("INSERT INTO profesores 
+                    (nombre, apellidos, email, password, departamento) 
+                    VALUES (?, ?, ?, ?, ?)");
+                $stmt->bind_param("sssss", $nombre, $apellidos, $email, $password_hash, $departamento);
+                
                 if ($stmt->execute()) {
-                    $exito = "Registro exitoso. Ahora puedes iniciar sesión";
-                    $_POST = array(); // Limpiar formulario
+                    header("Location: login.php?registro=exito");
+                    exit();
                 } else {
-                    $error = "Error al registrar: " . $conn->error;
+                    $error = "Error al registrar: " . $stmt->error;
                 }
-                $stmt->close();
             }
-            $stmt_check->close();
+        } catch (Exception $e) {
+            $error = "Error en el sistema: " . $e->getMessage();
         }
     }
-    $conn->close();
 }
 ?>
 
@@ -77,96 +66,76 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registro</title>
+    <title>Registro de Profesor</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .grupo-nombre {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
+        .container { max-width: 500px; margin-top: 50px; }
+        .card { border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body class="bg-light">
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow">
-                    <div class="card-header bg-success text-white">
-                        <h3 class="text-center mb-0">Registro de Usuario</h3>
+    <div class="container">
+        <div class="card p-4">
+            <h2 class="text-center mb-4">Registro de Profesor</h2>
+            
+            <?php if (!empty($error)): ?>
+                <div class="alert alert-danger"><?= $error ?></div>
+            <?php endif; ?>
+
+            <form method="POST">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" name="nombre" class="form-control" required 
+                               value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>">
                     </div>
-                    <div class="card-body">
-                        <?php if (!empty($error)): ?>
-                            <div class="alert alert-danger"><?= $error ?></div>
-                        <?php endif; ?>
-                        
-                        <?php if (!empty($exito)): ?>
-                            <div class="alert alert-success"><?= $exito ?></div>
-                        <?php endif; ?>
-
-                        <form method="POST">
-                            <div class="grupo-nombre mb-3">
-                                <div>
-                                    <label class="form-label">Nombre:</label>
-                                    <input type="text" name="nombre" class="form-control" 
-                                        value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>" 
-                                        required
-                                        pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+"
-                                        title="Solo letras y espacios">
-                                </div>
-                                <div>
-                                    <label class="form-label">Apellidos:</label>
-                                    <input type="text" name="apellidos" class="form-control" 
-                                        value="<?= htmlspecialchars($_POST['apellidos'] ?? '') ?>" 
-                                        required
-                                        pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+"
-                                        title="Solo letras y espacios">
-                                </div>
-                            </div>
-
-                            <div class="row g-3 mb-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Nombre de usuario:</label>
-                                    <input type="text" name="usuario" class="form-control" 
-                                        value="<?= htmlspecialchars($_POST['usuario'] ?? '') ?>" 
-                                        required
-                                        minlength="4"
-                                        pattern="[A-Za-z0-9_]+"
-                                        title="Letras, números y guiones bajos">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Correo electrónico:</label>
-                                    <input type="email" name="email" class="form-control" 
-                                        value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" 
-                                        required>
-                                </div>
-                            </div>
-
-                            <div class="row g-3 mb-4">
-                                <div class="col-md-6">
-                                    <label class="form-label">Contraseña:</label>
-                                    <input type="password" name="password" class="form-control" 
-                                        required
-                                        minlength="8"
-                                        pattern="^(?=.*[A-Za-z])(?=.*\d).{8,}$"
-                                        title="Mínimo 8 caracteres con al menos una letra y un número">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Confirmar contraseña:</label>
-                                    <input type="password" name="confirm_password" class="form-control" required>
-                                </div>
-                            </div>
-
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-success btn-lg">Registrarse</button>
-                                <a href="login.php" class="btn btn-outline-success">
-                                    ¿Ya tienes cuenta? Inicia sesión
-                                </a>
-                            </div>
-                        </form>
+                    
+                    <div class="col-md-6">
+                        <label class="form-label">Apellidos</label>
+                        <input type="text" name="apellidos" class="form-control"
+                               value="<?= htmlspecialchars($_POST['apellidos'] ?? '') ?>">
+                    </div>
+                    
+                    <div class="col-12">
+                        <label class="form-label">Correo institucional</label>
+                        <input type="email" name="email" class="form-control" required 
+                               placeholder="usuario@iesamachado.org" 
+                               value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
+                    </div>
+                    
+                    <div class="col-12">
+                        <label class="form-label">Contraseña</label>
+                        <input type="password" name="password" class="form-control" required 
+                               minlength="8">
+                    </div>
+                    
+                    <div class="col-12">
+                        <label class="form-label">Confirmar Contraseña</label>
+                        <input type="password" name="confirm_password" class="form-control" required 
+                               minlength="8">
+                    </div>
+                    
+                    <div class="col-12">
+                        <label class="form-label">Departamento</label>
+                        <select name="departamento" class="form-select" required>
+                            <?php foreach ($departamentos as $clave => $valor): ?>
+                                <option value="<?= $clave ?>" 
+                                    <?= ($_POST['departamento'] ?? '') === $clave ? 'selected' : '' ?>>
+                                    <?= $valor ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+                    </div>
+                    
+                    <div class="text-center">
+                        <a href="login.php" class="text-decoration-none">¿Ya tienes cuenta? Inicia sesión</a>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </body>

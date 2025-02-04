@@ -1,44 +1,32 @@
 <?php
 session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+require 'includes/conexion.php';
 
-if (isset($_SESSION['usuario_id'])) {
-    header("Location: actividades/actividades.php");
-    exit();
-}
-
-include 'includes/conexion.php';
-
-$error = '';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $usuario = $conn->real_escape_string($_POST['usuario']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $conn->real_escape_string($_POST['email']);
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT id, password FROM usuarios WHERE usuario = ?");
-    $stmt->bind_param("s", $usuario);
+    $stmt = $conn->prepare("SELECT id, password, es_admin FROM profesores WHERE email = ?");
+    $stmt->bind_param("s", $email);
     $stmt->execute();
-    $resultado = $stmt->get_result();
+    $result = $stmt->get_result();
 
-    if ($resultado->num_rows === 1) {
-        $usuario_db = $resultado->fetch_assoc();
-        if (password_verify($password, $usuario_db['password'])) {
-            $_SESSION['usuario_id'] = $usuario_db['id'];
-            $_SESSION['usuario'] = $usuario;
-            header("Location: actividades/actividades.php");
+    if ($result->num_rows === 1) {
+        $usuario = $result->fetch_assoc();
+        
+        if (password_verify($password, $usuario['password'])) {
+            $_SESSION['usuario_id'] = $usuario['id'];
+            $_SESSION['es_admin'] = $usuario['es_admin'];
+            header("Location: actividades/actividades.php"); // Único cambio realizado
             exit();
-        } else {
-            $error = "Contraseña incorrecta";
         }
-    } else {
-        $error = "Usuario no encontrado";
     }
-    $stmt->close();
-    $conn->close();
+    
+    // Si falla
+    header("Location: login.php?error=1");
+    exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -46,22 +34,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow">
-                    <div class="card-header bg-primary text-white">
-                        <h3 class="text-center">Iniciar Sesión</h3>
-                    </div>
                     <div class="card-body">
-                        <?php if (!empty($error)): ?>
-                            <div class="alert alert-danger"><?= $error ?></div>
+                        <h2 class="card-title text-center mb-4">Inicio de Sesión</h2>
+                        <?php if (isset($_GET['error'])): ?>
+                            <div class="alert alert-danger">Credenciales incorrectas</div>
                         <?php endif; ?>
-                        <form method="POST">
+                        <form method="post">
                             <div class="mb-3">
-                                <label>Usuario:</label>
-                                <input type="text" name="usuario" class="form-control" required>
+                                <label>Email:</label>
+                                <input type="email" name="email" class="form-control" required>
                             </div>
                             <div class="mb-3">
                                 <label>Contraseña:</label>
